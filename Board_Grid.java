@@ -14,18 +14,19 @@ public class Board_Grid {
 	private Random rand;
 	public int Shipcount;
 
-	public Board_Grid() { // constructor
+	public Board_Grid() { // constructor create the 1st board
 		// We use random to create a matrix with dimension between 8 to 24
 		rand = new Random();
 		this.dimension = rand.nextInt(16) + 8;
 
 		// we create a board with those dimensions and then we populate it
-		board = new int[dimension][dimension];
-		Shipcount = rand.nextInt(10);
+		board = new int[dimension][dimension]; //initialize 2 dimensional array
+		Shipcount = rand.nextInt(7) + 4; //minimun amount of boats is 4 and max is 10 0-6 + 4
 
 	}
 
-	public Board_Grid(int dimension, int Shipcount) {
+	public Board_Grid(int dimension, int Shipcount) { //we needed 2 constructors in order to preserve information 
+	//from previous board
 		this.dimension = dimension;
 		this.Shipcount = Shipcount;
 
@@ -41,7 +42,7 @@ public class Board_Grid {
 		int shipSize = 4;
 
 		boolean Overlaps;
-		for (int i = 0; i < Shipcount; i++){
+		for (int i = 0; i < Shipcount; i++){ 
 			do{
 				Overlaps = false;
 				shipDirection = rand.nextInt(2); //we set direction for the ship bet 0-1
@@ -49,13 +50,13 @@ public class Board_Grid {
 				if (shipDirection == 0){ //horizontal
 					randX = rand.nextInt(dimension - shipSize); //where do we start filling up the values?
 					randY = rand.nextInt(dimension); //y coordinate
-					for (int y = 0; y < shipSize; y++){
+					for (int y = 0; y < shipSize; y++){ //verifies if the boats overlaps
 						if (board[randX+y][randY] == 1){
 							Overlaps = true;
 							break; //breaks the for loop, in the case the boats overlap
 						}
 					}
-					if (!Overlaps) { //if does not overlap
+					if (!Overlaps) { //if does not overlap inputs 1 in the array
 						for (int z = 0; z < shipSize; z++) {
 
 							board[randX+z][randY] = 1;
@@ -69,13 +70,20 @@ public class Board_Grid {
 								Overlaps = true;
 								break;
 							}
-							board[randX][randY+j] = 1;
+						
 						}
+						if (!Overlaps) { //if does not overlap inputs 1 in the array
+							for (int z = 0; z < shipSize; z++) { 
+
+								board[randX][randY+z] = 1;
+
+							}}
 					}
 				} while(Overlaps); //while overlaps is true
 			}
 		}
-	public String toString() {
+	
+	public String toString() { //shouldve used override doesnt matter now
 		String matrix = "";
         for(int y = 0; y < dimension; y++){
             for(int x = 0; x < dimension; x++){

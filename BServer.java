@@ -1,9 +1,9 @@
 /**
  * 
  */
-import java.io.IOException;
-import java.net.*;
-import java.io.*;
+import java.io.IOException; //try catch
+import java.net.*; //sockets
+import java.io.*; //all input output streams
 
 /**
  * @author gabmo
@@ -11,8 +11,8 @@ import java.io.*;
  */
 public class BServer { //server receives the information
 	//Socket Variables
-	ServerSocket GameServer;
-	Socket CaptainHook;
+	ServerSocket GameServer; //just a listener. 
+	Socket CaptainHook; //exterior computer
 	//Thread variable declaration
 	Thread Dream; //Dream within a dream 
 	LoginThread Login; // Login Thread Declaration 
@@ -21,12 +21,12 @@ public class BServer { //server receives the information
 	public BServer() {
 		
 		try {
-			GameServer = new ServerSocket(8767);
+			GameServer = new ServerSocket(8767); //port opened for the server - listener
 			while(true){
                 System.out.println("[*] Waiting for players...");
-                CaptainHook = GameServer.accept();
+                CaptainHook = GameServer.accept(); //captain hook is the outside computer and its information is stored in the server
                 Login = new LoginThread(CaptainHook); //constructor used to pass the value of CHook into the class
-                Dream = new Thread(Login); // Falls asleep
+                Dream = new Thread(Login); // dream within a dream - program runs new thread
                 Dream.start(); //Start dreaming 
                 
         // All this was moved in order to create the threads
